@@ -1,0 +1,55 @@
+plugins {
+    id 'java-library'
+    id 'org.graalvm.buildtools.native' version '0.10.6'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jars.sogeo.services/mirror' }
+}
+
+dependencies {
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    api 'org.graalvm.nativeimage:svm:24.2.1'
+    
+    api libs.ili2c.core
+    api libs.ili2c.tool
+    api libs.iox.ili
+    api libs.ehibasics
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(24)
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+graalvmNative {
+    binaries {
+        main {
+            imageName = 'libili2c'
+            debug = false
+            verbose = true
+            fallback = false
+            sharedLibrary = true
+            richOutput = true
+
+            buildArgs.add('--enable-url-protocols=http,https')
+            buildArgs.add("-H:+AllowDeprecatedBuilderClassesOnImageClasspath")
+
+        }
+        /*
+        test {
+            verbose = true
+            fallback = false
+            buildArgs.add('--enable-url-protocols=http,https')
+        }
+        */
+    }
+}
