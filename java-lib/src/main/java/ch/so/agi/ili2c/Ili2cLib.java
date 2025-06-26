@@ -22,7 +22,6 @@ public class Ili2cLib {
     
     @CEntryPoint(name = "compileModel")
     public static boolean compileModel(IsolateThread thread, CCharPointer iliFile, CCharPointer logFile) {
-        System.out.println("Hallo Welt.");
         FileLogger fileLogger = new FileLogger(new File(CTypeConversion.toJavaString(logFile)), false);
         EhiLogger.getInstance().addListener(fileLogger);
 

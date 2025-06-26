@@ -4,7 +4,7 @@
 #include "libili2c.h"
 
 int main(int argc, char **argv) {
-    fprintf(stderr, "Hallo Welt");
+    //fprintf(stderr, "Hallo Welt");
 
     graal_isolate_t *isolate = NULL;
     graal_isolatethread_t *thread = NULL;
@@ -18,10 +18,3 @@ int main(int argc, char **argv) {
 
     graal_tear_down_isolate(thread);
 }
-
-
-
-// if (argc != 2) {
-//     fprintf(stderr, "Usage: %s <filter>\n", argv[0]);
-//     exit(1);
-// }
