@@ -20,8 +20,8 @@ import org.graalvm.nativeimage.c.type.CTypeConversion;
 
 public class Ili2cLib {
     
-    @CEntryPoint(name = "ili2c")
-    public static boolean runCompiler(IsolateThread thread, CCharPointer iliFile, CCharPointer logFile) {
+    @CEntryPoint(name = "compileModel")
+    public static boolean compileModel(IsolateThread thread, CCharPointer iliFile, CCharPointer logFile) {
         System.out.println("Hallo Welt.");
         FileLogger fileLogger = new FileLogger(new File(CTypeConversion.toJavaString(logFile)), false);
         EhiLogger.getInstance().addListener(fileLogger);
