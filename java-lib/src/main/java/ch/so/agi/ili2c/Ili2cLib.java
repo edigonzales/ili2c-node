@@ -21,7 +21,7 @@ import org.graalvm.nativeimage.c.type.CTypeConversion;
 public class Ili2cLib {
     
     @CEntryPoint(name = "ili2c")
-    public static boolean runCompiler(IsolateThread thread, CCharPointer logFile) {
+    public static boolean runCompiler(IsolateThread thread, CCharPointer iliFile, CCharPointer logFile) {
         System.out.println("Hallo Welt.");
         FileLogger fileLogger = new FileLogger(new File(CTypeConversion.toJavaString(logFile)), false);
         EhiLogger.getInstance().addListener(fileLogger);
@@ -30,11 +30,12 @@ public class Ili2cLib {
         IliManager manager = new IliManager();        
         manager.setRepositories(Ili2cSettings.DEFAULT_ILIDIRS.split(";"));
         //manager.setRepositories(ilidirs.split(";"));
-        ArrayList<String> ilifiles = new ArrayList<String>();
-        ilifiles.add("src/test/data/SO_ARP_SEin_Konfiguration_20250115.ili");
+        ArrayList<String> iliFiles = new ArrayList<String>();
+        //ilifiles.add("src/test/data/SO_ARP_SEin_Konfiguration_20250115.ili");
+        iliFiles.add(CTypeConversion.toJavaString(iliFile));
         Configuration config;
         try {
-            config = manager.getConfigWithFiles(ilifiles);
+            config = manager.getConfigWithFiles(iliFiles);
         } catch (Ili2cException e) {
             EhiLogger.getInstance().removeListener(fileLogger);
             return false;
