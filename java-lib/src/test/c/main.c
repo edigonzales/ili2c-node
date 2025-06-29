@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    printf("Number of entries: %d\n", compileModel(thread, argv[1], argv[2]));
+    printf("Number of entries: %d\n", compileModel(thread/*, argv[1], argv[2]*/));
 
     graal_tear_down_isolate(thread);
 }

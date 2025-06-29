@@ -21,34 +21,37 @@ import org.graalvm.nativeimage.c.type.CTypeConversion;
 public class Ili2cLib {
     
     @CEntryPoint(name = "compileModel")
-    public static boolean compileModel(IsolateThread thread, CCharPointer iliFile, CCharPointer logFile) {
-        FileLogger fileLogger = new FileLogger(new File(CTypeConversion.toJavaString(logFile)), false);
-        EhiLogger.getInstance().addListener(fileLogger);
-
+    public static boolean compileModel(IsolateThread thread /*, CCharPointer iliFile, CCharPointer logFile*/) {
         
-        IliManager manager = new IliManager();        
-        manager.setRepositories(Ili2cSettings.DEFAULT_ILIDIRS.split(";"));
-        //manager.setRepositories(ilidirs.split(";"));
-        ArrayList<String> iliFiles = new ArrayList<String>();
-        //ilifiles.add("src/test/data/SO_ARP_SEin_Konfiguration_20250115.ili");
-        iliFiles.add(CTypeConversion.toJavaString(iliFile));
-        Configuration config;
-        try {
-            config = manager.getConfigWithFiles(iliFiles);
-        } catch (Ili2cException e) {
-            EhiLogger.getInstance().removeListener(fileLogger);
-            return false;
-        } 
+        System.out.println("Hallo Welt.");
         
-        TransferDescription td = null;
-        try {
-            td = ch.interlis.ili2c.Ili2c.runCompiler(config);
-        } catch (Ili2cFailure e) {
-            EhiLogger.getInstance().removeListener(fileLogger);
-            return false;
-        }
-
-        EhiLogger.getInstance().removeListener(fileLogger);
+//        FileLogger fileLogger = new FileLogger(new File(CTypeConversion.toJavaString(logFile)), false);
+//        EhiLogger.getInstance().addListener(fileLogger);
+//
+//        
+//        IliManager manager = new IliManager();        
+//        manager.setRepositories(Ili2cSettings.DEFAULT_ILIDIRS.split(";"));
+//        //manager.setRepositories(ilidirs.split(";"));
+//        ArrayList<String> iliFiles = new ArrayList<String>();
+//        //ilifiles.add("src/test/data/SO_ARP_SEin_Konfiguration_20250115.ili");
+//        iliFiles.add(CTypeConversion.toJavaString(iliFile));
+//        Configuration config;
+//        try {
+//            config = manager.getConfigWithFiles(iliFiles);
+//        } catch (Ili2cException e) {
+//            EhiLogger.getInstance().removeListener(fileLogger);
+//            return false;
+//        } 
+//        
+//        TransferDescription td = null;
+//        try {
+//            td = ch.interlis.ili2c.Ili2c.runCompiler(config);
+//        } catch (Ili2cFailure e) {
+//            EhiLogger.getInstance().removeListener(fileLogger);
+//            return false;
+//        }
+//
+//        EhiLogger.getInstance().removeListener(fileLogger);
         return true;
     }
 }
