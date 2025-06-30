@@ -22,14 +22,23 @@
   },
   "homepage": "https://github.com/edigonzales/ili2c-node#readme",
   "dependencies": {
-    "ffi-rs": "^1.0.96",
-    "koffi": "^2.12.0",
-    "ref-napi": "^3.0.3"
+    "node-addon-api": "^8.4.0",
+    "node-gyp": "^11.2.0"
   },
   "files": [
     "lib/**",
     "index.js",
     "index.d.ts",
     "README.md"
-  ]
+  ],
+  "devDependencies": {
+    "prebuild": "^13.0.1",
+    "prebuildify": "^6.0.1"
+  },
+  "prebuildify": {
+    "files": [
+      "build/Release/ili2caddon.node",
+      "build/Release/libili2c.dylib"
+    ]
+  }
 }
