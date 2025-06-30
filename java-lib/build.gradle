@@ -13,7 +13,6 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     compileOnly 'org.graalvm.nativeimage:svm:21.3.14'
-    //api "org.graalvm.nativeimage:svm:22.3.5"
     
     api libs.ili2c.core
     api libs.ili2c.tool
@@ -46,6 +45,7 @@ graalvmNative {
 
             buildArgs.add('--enable-url-protocols=http,https')
             buildArgs.add("-H:+AllowDeprecatedBuilderClassesOnImageClasspath")
+            // https://www.graalvm.org/latest/reference-manual/native-image/optimizations-and-performance/
             buildArgs.add('-Ob') 
         }
         /*
