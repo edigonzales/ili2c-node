@@ -5,9 +5,8 @@ A simple Node.js wrapper to compile INTERLIS models.
 ## Usage
 
 ```js
-const { compileIliModel } = require('ili2c');
-
-console.log(compileIliModel('MODEL Test; END Test.'));
+const ili2c = require('ili2c');
+const result = ili2c.compileModel("test/SO_ARP_SEin_Konfiguration_20250115.ili", "test.log");
 ```
 
 ## Dev
