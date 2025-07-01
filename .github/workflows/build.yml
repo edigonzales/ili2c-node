@@ -65,11 +65,8 @@ jobs:
         run: |
           cd module
           ls -la lib_ext
-          npm install node-gyp
-          npm install node-addon-api
-          npm install --save-dev prebuildify
-          npx node-gyp rebuild
-          npx prebuildify --target 22.0.0
+          npm ci
+          npx prebuildify --napi --strip --target 22.0.0
           ls -la prebuilds
 
       - name: 'Fix dylib look up'
