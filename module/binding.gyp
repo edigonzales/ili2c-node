@@ -7,7 +7,9 @@
             ],
             "include_dirs": [
                 "node_modules/node-addon-api",
-                "lib_ext",
+                "lib_ext/mac",
+                "lib_ext/linux",
+                "lib_ext/win",
                 "."
             ],
             "cflags_cc": [
