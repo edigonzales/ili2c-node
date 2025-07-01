@@ -1,6 +1,6 @@
 {
   "name": "ili2c",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "A simple Node.js wrapper to compile INTERLIS models.",
   "main": "index.js",
   "scripts": {
