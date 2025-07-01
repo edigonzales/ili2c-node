@@ -63,6 +63,7 @@ jobs:
         shell: bash
         run: |
           cd module
+          ls -la lib_ext
           npm install node-gyp
           npm install node-addon-api
           npm install --save-dev prebuildify

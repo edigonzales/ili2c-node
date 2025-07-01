@@ -62,7 +62,18 @@ tasks.register('deleteSharedLibs', Delete) {
    delete files("../module/lib_ext")
 }
 
-def osName = System.getProperty("os.name").toLowerCase()
+def osProperty = System.getProperty("os.name").toLowerCase()
+def osName = "";
+if (osProperty.contains("windows")) {
+    osName = "win"
+    println "Running on Windows"
+} else if (osProperty.contains("mac")) {
+    osName = "mac"
+    println "Running on macOS"
+} else if (osProperty.contains("linux")) {
+    osName = "linux"
+    println "Running on Linux"
+}
 
 tasks.register('copySharedLibs', Copy) {
     dependsOn 'deleteSharedLibs'

@@ -22,12 +22,12 @@
                     "OS=='mac'",
                     {
                         "libraries": [
-                            "-L<(module_root_dir)/lib_ext",
+                            "-L<(module_root_dir)/lib_ext/mac",
                             "-lili2c"
                         ],
                         "copies": [
                             {
-                                "files": [ "lib_ext/libili2c.dylib" ],
+                                "files": [ "lib_ext/mac/libili2c.dylib" ],
                                 "destination": "<(module_root_dir)/build/Release"
                             }
                         ]
@@ -37,12 +37,12 @@
                     "OS=='linux'",
                     {
                         "libraries": [
-                            "-L<(module_root_dir)/lib_ext",
+                            "-L<(module_root_dir)/lib_ext/linux",
                             "-lili2c"
                         ],
                         "copies": [
                             {
-                                "files": [ "lib_ext/libili2c.so" ],
+                                "files": [ "lib_ext/linux/libili2c.so" ],
                                 "destination": "<(module_root_dir)/build/Release"
                             }
                         ]
@@ -57,8 +57,8 @@
                         "copies": [
                             {
                                 "files": [ 
-                                    "lib_ext\\libili2c.dll", 
-                                    "lib_ext\\libili2c.lib"
+                                    "lib_ext\\win\\libili2c.dll", 
+                                    "lib_ext\\win\\libili2c.lib"
                                 ],
                                 "destination": "<(module_root_dir)/build/Release"
                             }
