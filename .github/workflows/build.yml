@@ -108,6 +108,7 @@ jobs:
       - name: Merge prebuilds into package folder
         run: |
           set -e
+          cd module
           mkdir -p prebuilds
 
           # each artifact lives under artifacts/prebuild-<os>-<arch>/
