@@ -7,11 +7,11 @@
             ],
             "include_dirs": [
                 "node_modules/node-addon-api",
-                "lib/macos",
+                "lib_ext",
                 "."
             ],
             "libraries": [
-                "-L<(module_root_dir)/lib/macos",
+                "-L<(module_root_dir)/lib_ext",
                 "-lili2c"
             ],
             "cflags_cc": [
@@ -26,12 +26,12 @@
                     "OS=='mac'",
                     {
                         "libraries": [
-                            "-L<(module_root_dir)/lib/macos",
+                            "-L<(module_root_dir)/lib_ext",
                             "-lili2c"
                         ],
                         "copies": [
                             {
-                                "files": [ "lib/macos/libili2c.dylib" ],
+                                "files": [ "lib_ext/libili2c.dylib" ],
                                 "destination": "<(module_root_dir)/build/Release"
                             }
                         ]
@@ -41,12 +41,12 @@
                     "OS=='linux'",
                     {
                         "libraries": [
-                            "-L<(module_root_dir)/lib/linux",
+                            "-L<(module_root_dir)/lib_ext",
                             "-lili2c"
                         ],
                         "copies": [
                             {
-                                "files": [ "lib/linux/libili2c.so" ],
+                                "files": [ "lib_ext/libili2c.so" ],
                                 "destination": "<(module_root_dir)/build/Release"
                             }
                         ]
@@ -56,11 +56,11 @@
                     "OS=='win'",
                     {
                         "libraries": [
-                            "<(module_root_dir)\\lib\\win\\ili2c.lib"
+                            "<(module_root_dir)\\lib_ext\\libili2c.lib"
                         ],
                         "copies": [
                             {
-                                "files": [ "lib\\win\\ili2c.dll" ],
+                                "files": [ "lib_ext\\libili2c.dll", "lib_ext\\libili2c.lib" ],
                                 "destination": "<(module_root_dir)/build/Release"
                             }
                         ]

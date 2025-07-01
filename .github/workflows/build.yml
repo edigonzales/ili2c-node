@@ -66,6 +66,7 @@ jobs:
           npm install node-gyp
           npm install node-addon-api
           npm install --save-dev prebuildify
+          npx node-gyp rebuild
 
 
 
