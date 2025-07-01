@@ -2,7 +2,9 @@
   "targets": [
     {
       "target_name": "ili2caddon",
-      "sources": [ "ili2c.cpp" ],
+      "sources": [
+        "ili2c.cpp"
+      ],
       "include_dirs": [
         "node_modules/node-addon-api",
         "lib_ext/mac",
@@ -19,45 +21,57 @@
       ],
       "conditions": [
         [
-          "OS=='mac'", {
+          "OS=='mac'",
+          {
             "libraries": [
               "-L<(module_root_dir)/lib_ext/mac",
               "-lili2c"
             ],
             "copies": [
               {
-                "files": [ "lib_ext/mac/libili2c.dylib" ],
+                "files": [
+                  "lib_ext/mac/libili2c.dylib"
+                ],
                 "destination": "<(module_root_dir)/prebuilds/darwin-arm64/"
               }
             ]
           }
         ],
         [
-          "OS=='linux'", {
+          "OS=='linux'",
+          {
             "libraries": [
               "-L<(module_root_dir)/lib_ext/linux",
               "-lili2c"
             ],
             "copies": [
               {
-                "files": [ "lib_ext/linux/libili2c.so" ],
+                "files": [
+                  "lib_ext/linux/libili2c.so"
+                ],
                 "destination": "<(module_root_dir)/prebuilds/linux-arm64/"
               }
             ]
           }
         ],
         [
-          "OS=='win'", {
+          "OS=='win'",
+          {
             "libraries": [
               "libili2c.lib"
             ],
             "copies": [
               {
                 "files": [
-                  "lib_ext\\win\\libili2c.dll",
                   "lib_ext\\win\\libili2c.lib"
                 ],
-                "destination": "<(module_root_dir)/prebuilds/win32-x64/"
+                "destination": "<(module_root_dir)/build/Release"
+              },
+              {
+                "files": [
+                  "lib_ext\\win\\libili2c.dll"
+                ],
+                "destination": "<(module_root_dir)/prebuilds/win32-x64"
               }
             ]
           }
