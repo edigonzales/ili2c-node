@@ -36,9 +36,9 @@
     "prebuildify": "^6.0.1"
   },
   "prebuildify": {
+    "strip": true,
     "files": [
-      "build/Release/ili2caddon.node",
-      "build/Release/libili2c.dylib"
+      "prebuilds/**/*"
     ]
   }
 }
