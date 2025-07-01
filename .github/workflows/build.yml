@@ -99,7 +99,11 @@ jobs:
       - name: 'List artifacts'
         run: |
           ls -la /home/runner/work/ili2c-node/ili2c-node/
-          ls -la /home/runner/work/ili2c-node/ili2c-node/darwin-arm64
+          mkdir -p module/prebuilds
+          mv lib-darwin-arm64 module/prebuilds/darwin-arm64
+          mv lib-linux-x64 module/prebuilds/linux-x64
+          mv lib-win32-x64 module/prebuilds/win32-x64
+          ls -la /home/runner/work/ili2c-node/ili2c-node/module/prebuilds
 
 
   #     - uses: actions/setup-python@v4
