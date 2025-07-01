@@ -4,7 +4,9 @@
   "description": "A simple Node.js wrapper to compile INTERLIS models.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "prebuildify --napi --strip",
+    "install": "node-gyp-build"
   },
   "repository": {
     "type": "git",
@@ -30,7 +32,6 @@
     "README.md"
   ],
   "devDependencies": {
-    "prebuild": "^13.0.1",
     "prebuildify": "^6.0.1",
     "node-gyp": "^11.2.0",
     "node-addon-api": "^8.4.0"

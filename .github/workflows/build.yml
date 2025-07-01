@@ -57,6 +57,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
+          cache: npm
 
       ## TODO test!!!
       - name: Build node module
@@ -78,63 +79,110 @@ jobs:
         run: |
           cd module/prebuilds/${{matrix.plat-name}}
           install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/libili2c.dylib ili2c.node
+          otool -L ili2c.node
 
       - name: 'Upload build artifact'
         if: ${{ success() }}
         uses: actions/upload-artifact@v4
         with:
-          name: lib-${{matrix.plat-name}}
-          path: |
-            module/prebuilds/${{matrix.plat-name}}
+          name: prebuild-${{matrix.plat-name}}
+          path: prebuilds/**
 
-  release:
-    needs: [build]
 
-    runs-on: ubuntu-22.04
+  publish:
+    name: Collect artifacts and publish to npm
+    needs: build              # Wait for all matrix builds
+    runs-on: ubuntu-latest
 
     steps:
 
-      - name: 'Check out repository'
+      # -- checkout is optional but handy for README, package.json, etc.
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.head.outputs.content }}
-          fetch-depth: 0
 
-      - name: 'Download all build artifacts'
+      # -- download all artifacts created by the matrix job
+      - name: Download prebuild artifacts
         uses: actions/download-artifact@v4
-
-      - name: 'List artifacts'
-        shell: bash
-        run: |
-          ls -la /home/runner/work/ili2c-node/ili2c-node/
-          mkdir -p module/prebuilds
-          mv lib-darwin-arm64 module/prebuilds/darwin-arm64
-          mv lib-linux-x64 module/prebuilds/linux-x64
-          mv lib-win32-x64 module/prebuilds/win32-x64
-          ls -la /home/runner/work/ili2c-node/ili2c-node/module/prebuilds
-
-      - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
-          registry-url: "https://registry.npmjs.org"
+          # wildcard grabs every artifact the build job uploaded
+          pattern: prebuild-*
+          path: ./artifacts
 
-      - name: 'Create local package (just for debugging)'
-        shell: bash
+      # -- move (or copy) each artifact’s prebuilds/ into the root dir
+      - name: Merge prebuilds into package folder
         run: |
-          cd module
-          npm pack
-          ls -la
+          set -e
+          mkdir -p prebuilds
+          # unpack every artifact and merge
+          for tgz in artifacts/prebuild-*/*.zip artifacts/prebuild-*/*.tar.gz artifacts/prebuild-*; do
+            if [[ -f "$tgz" ]]; then
+              # auto-detect zip vs tar
+              case "$tgz" in
+                *.zip)      unzip -q "$tgz" -d unpack ;;
+                *.tar.gz)   tar -xzf "$tgz" -C unpack ;;
+                *)          cp -R "$tgz"/prebuilds/* prebuilds/ ;;
+              esac
+            fi
+          done
+          # if any were archives, move their prebuilds too
+          if [ -d unpack ]; then
+            cp -R unpack/**/prebuilds/* prebuilds/ || true
+          fi
 
-      - name: Authenticate with npm
-        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+      # -- quick glance that everything’s in place
+      - name: List resulting prebuilds
+        run: |
+          echo "=== prebuilds ==="
+          find prebuilds -type f | sort
 
-      - name: Publish
-        shell: bash
-        run: | 
-          cd module
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  # release:
+  #   needs: [build]
+
+  #   runs-on: ubuntu-24.04
+
+  #   steps:
+
+  #     - name: 'Check out repository'
+  #       uses: actions/checkout@v4
+  #       with:
+  #         ref: ${{ steps.head.outputs.content }}
+  #         fetch-depth: 0
+
+  #     - name: 'Download all build artifacts'
+  #       uses: actions/download-artifact@v4
+
+  #     - name: 'List artifacts'
+  #       shell: bash
+  #       run: |
+  #         ls -la /home/runner/work/ili2c-node/ili2c-node/
+  #         mkdir -p module/prebuilds
+  #         mv lib-darwin-arm64 module/prebuilds/darwin-arm64
+  #         mv lib-linux-x64 module/prebuilds/linux-x64
+  #         mv lib-win32-x64 module/prebuilds/win32-x64
+  #         ls -la /home/runner/work/ili2c-node/ili2c-node/module/prebuilds
+
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '22.x'
+  #         registry-url: "https://registry.npmjs.org"
+
+  #     - name: 'Create local package (just for debugging)'
+  #       shell: bash
+  #       run: |
+  #         cd module
+  #         npm pack
+  #         ls -la
+
+  #     - name: Authenticate with npm
+  #       run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+
+  #     - name: Publish
+  #       shell: bash
+  #       run: | 
+  #         cd module
+  #         npm publish
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   #     - uses: actions/setup-python@v4
   #       with:
