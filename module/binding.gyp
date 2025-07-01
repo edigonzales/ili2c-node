@@ -65,7 +65,7 @@
                 "files": [
                   "lib_ext\\win\\libili2c.lib"
                 ],
-                "destination": "<(module_root_dir)/build/Release"
+                "destination": "<(module_root_dir)"
               },
               {
                 "files": [
