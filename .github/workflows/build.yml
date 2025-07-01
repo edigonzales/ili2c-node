@@ -58,6 +58,7 @@ jobs:
         with:
           node-version: '22.x'
 
+      ## TODO test!!!
       - name: Build node module
         id: buildNodeModule
         shell: bash
@@ -121,7 +122,10 @@ jobs:
         run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
 
       - name: Publish
-        run: npm publish
+        shell: bash
+        run: | 
+          cd module
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
