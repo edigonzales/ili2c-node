@@ -67,6 +67,8 @@ jobs:
           npm install node-addon-api
           npm install --save-dev prebuildify
           npx node-gyp rebuild
+          npx prebuildify --target 22.0.0
+
 
 
 
