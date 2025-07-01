@@ -111,6 +111,7 @@ jobs:
       - name: Merge prebuilds into package folder
         run: |
           set -e
+          ls -la /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64
           cd module
           mkdir -p prebuilds
           # unpack every artifact and merge
