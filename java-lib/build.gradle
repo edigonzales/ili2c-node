@@ -47,6 +47,7 @@ graalvmNative {
             buildArgs.add("-H:+AllowDeprecatedBuilderClassesOnImageClasspath")
             // https://www.graalvm.org/latest/reference-manual/native-image/optimizations-and-performance/
             buildArgs.add('-Ob') 
+            buildArgs.add('-march=compatibility')
         }
         /*
         test {
