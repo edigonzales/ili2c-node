@@ -104,6 +104,8 @@ jobs:
           pattern: prebuild-*
           path: ./artifacts
 
+
+##### TODO das stimmt nicht mehr, ist Müll.
       # -- move (or copy) each artifact’s prebuilds/ into the root dir
       - name: Merge prebuilds into package folder
         run: |
