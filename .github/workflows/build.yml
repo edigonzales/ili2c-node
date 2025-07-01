@@ -108,24 +108,18 @@ jobs:
       - name: Merge prebuilds into package folder
         run: |
           set -e
-          ls -la /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64
-          cd module
           mkdir -p prebuilds
-          # unpack every artifact and merge
-          for tgz in artifacts/prebuild-*/*.zip artifacts/prebuild-*/*.tar.gz artifacts/prebuild-*; do
-            if [[ -f "$tgz" ]]; then
-              # auto-detect zip vs tar
-              case "$tgz" in
-                *.zip)      unzip -q "$tgz" -d unpack ;;
-                *.tar.gz)   tar -xzf "$tgz" -C unpack ;;
-                *)          cp -R "$tgz"/prebuilds/* prebuilds/ ;;
-              esac
+
+          # each artifact lives under artifacts/prebuild-<os>-<arch>/
+          for artifact in artifacts/prebuild-*; do
+            # 1) if it already contains a prebuilds/ folder, copy that
+            if [ -d "$artifact/prebuilds" ]; then
+              cp -R "$artifact/prebuilds/"* prebuilds/
+            # 2) else it probably unpacked directly into <arch>/…
+            else
+              cp -R "$artifact/"* prebuilds/
             fi
           done
-          # if any were archives, move their prebuilds too
-          if [ -d unpack ]; then
-            cp -R unpack/**/prebuilds/* prebuilds/ || true
-          fi
 
       # -- quick glance that everything’s in place
       - name: List resulting prebuilds
