@@ -42,6 +42,7 @@ jobs:
 
       - name: Build native image
         id: buildNative
+        shell: bash
         run: |
           cd java-lib
           ./gradlew clean nativeCompile
