@@ -80,6 +80,27 @@ jobs:
             module/prebuilds/${{matrix.plat-name}}
 
 
+  release:
+    needs: [build]
+
+    runs-on: ubuntu-22.04
+
+    steps:
+
+      - name: 'Check out repository'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.head.outputs.content }}
+          fetch-depth: 0
+
+      - name: 'Download all build artifacts'
+        uses: actions/download-artifact@v4
+
+      - name: 'List artifacts'
+        run: |
+          ls -la /home/runner/work/ili2c-node/ili2c-node/
+          ls -la /home/runner/work/ili2c-node/ili2c-node/darwin-arm64
+
 
   #     - uses: actions/setup-python@v4
   #       with:
