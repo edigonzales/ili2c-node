@@ -62,6 +62,8 @@ tasks.register('deleteSharedLibs', Delete) {
    delete files("../module/lib_ext")
 }
 
+def osName = System.getProperty("os.name").toLowerCase()
+
 tasks.register('copySharedLibs', Copy) {
     dependsOn 'deleteSharedLibs'
     from ('build/native/nativeCompile') {
@@ -71,6 +73,6 @@ tasks.register('copySharedLibs', Copy) {
         include '*.dll'
         include '*.dylib'
     }
-    into '../module/lib_ext/'
+    into "../module/lib_ext/$osName"
 }
 nativeCompile.finalizedBy(copySharedLibs)
