@@ -96,6 +96,7 @@ jobs:
         uses: actions/download-artifact@v4
 
       - name: 'List artifacts'
+        shell: bash
         run: |
           ls -la /home/runner/work/ili2c-node/ili2c-node/
           mkdir -p module/prebuilds
@@ -103,6 +104,18 @@ jobs:
           mv lib-linux-x64 module/prebuilds/linux-x64
           mv lib-win32-x64 module/prebuilds/win32-x64
           ls -la /home/runner/work/ili2c-node/ili2c-node/module/prebuilds
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: 'Publish package'
+        shell: bash
+        run: |
+          cd module
+          npm pack
+          ls -la
+
 
 
   #     - uses: actions/setup-python@v4
