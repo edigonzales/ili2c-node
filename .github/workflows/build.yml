@@ -16,13 +16,13 @@ jobs:
         # https://github.com/actions/runner-images
         os: [ ubuntu-24.04, macos-14, windows-2022 ]
         #os: [ ubuntu-24.04]
-        # include:
-        #   - os: 'ubuntu-22.04'
-        #     plat-name: 'manylinux2014_x86_64'
-        #   - os: 'macos-12'
-        #     plat-name: 'macosx_12_0_x86_64'
-        #   - os: 'windows-2022'
-        #     plat-name: 'win_amd64'
+        include:
+          - os: 'ubuntu-24.04'
+            plat-name: 'linux-x64'
+          - os: 'macos-14'
+            plat-name: 'darwin-arm64'
+          - os: 'windows-2022'
+            plat-name: 'win_amd64'
 
     runs-on: ${{ matrix.os }}
 
@@ -77,7 +77,7 @@ jobs:
         with:
           name: artifacts
           path: |
-            module/prebuilds/
+            module/prebuilds/${{matrix.plat-name}}
 
 
 
