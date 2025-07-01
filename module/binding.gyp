@@ -49,7 +49,7 @@
                 "files": [
                   "lib_ext/linux/libili2c.so"
                 ],
-                "destination": "<(module_root_dir)/prebuilds/linux-arm64/"
+                "destination": "<(module_root_dir)/prebuilds/linux-x64/"
               }
             ]
           }
