@@ -73,7 +73,14 @@
                 ],
                 "destination": "<(module_root_dir)/prebuilds/win32-x64"
               }
-            ]
+            ],
+            "msvs_settings": {
+              "VCLinkerTool": {
+                "AdditionalLibraryDirectories": [
+                  "<(module_root_dir)"
+                ]
+              }
+            }
           }
         ]
       ]
