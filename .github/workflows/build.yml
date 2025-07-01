@@ -48,11 +48,26 @@ jobs:
           ./gradlew clean nativeCompile
           ls -la build/native/nativeCompile/
 
-  #     - uses: actions/upload-artifact@v2
-  #       if: ${{ failure() }}
-  #       with:
-  #         name: reports-native
-  #         path: lib/build/reports/tests/
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: reports-native
+          path: java-lib/build/reports/tests/
+
+      - name: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Build node module
+        id: buildNodeModule
+        shell: bash
+        run: |
+          cd module
+          npm install node-gyp
+          npm install node-addon-api
+          npm install --save-dev prebuildify
+
+
 
   #     - uses: actions/setup-python@v4
   #       with:
