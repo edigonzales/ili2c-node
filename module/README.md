@@ -2,46 +2,25 @@
 
 A simple Node.js wrapper to compile INTERLIS models.
 
-## Usage
-
 ```js
 const ili2c = require('ili2c');
 const result = ili2c.compileModel("test/SO_ARP_SEin_Konfiguration_20250115.ili", "test.log");
 ```
 
-## Dev
+## Features
 
-```
-npm install node-gyp
-```
+## Requirements
 
-```
-npm install node-addon-api
-```
+## Known Issues
 
-```
-npm install --save-dev prebuild
-npm install --save-dev prebuildify
-```
+## Release Notes
 
-```
-npx node-gyp rebuild
-```
+### 0.0.2 
 
-Falls man das binding.gyp ändert: 
+- First release that compiles ili models.
 
-```
-npx node-gyp clean
-npx node-gyp configure
-npx node-gyp rebuild
-```
+### 0.0.1
 
-```
-npx prebuild --target 22.0.0
-npx prebuildify --target 22.0.0
-```
+- Initial release of the ili2c wrapper without any function.
 
-Lokal paketieren (zum Testen, was reingepackt wird):
-```
-npm pack
-```
+
