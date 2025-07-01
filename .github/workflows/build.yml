@@ -22,7 +22,7 @@ jobs:
           - os: 'macos-14'
             plat-name: 'darwin-arm64'
           - os: 'windows-2022'
-            plat-name: 'win_amd64'
+            plat-name: 'win32-x64'
 
     runs-on: ${{ matrix.os }}
 
