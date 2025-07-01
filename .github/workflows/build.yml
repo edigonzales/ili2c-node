@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 'Add Developer Command Prompt for Microsoft Visual C++ '
+      - name: 'Add Developer Command Prompt for Microsoft Visual C++'
         if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
 
@@ -71,6 +71,13 @@ jobs:
           npx node-gyp rebuild
           npx prebuildify --target 22.0.0
           ls -la prebuilds
+
+      - name: 'Fix dylib look up'
+        if: ${{ runner.os == 'macOS' }}
+        shell: bash
+        run: |
+          cd module/prebuilds/${{matrix.plat-name}}
+          install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/libili2c.dylib ili2c.node
 
       - name: 'Upload build artifact'
         if: ${{ success() }}
