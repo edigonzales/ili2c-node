@@ -111,6 +111,7 @@ jobs:
       - name: Merge prebuilds into package folder
         run: |
           set -e
+          cd module
           mkdir -p prebuilds
           # unpack every artifact and merge
           for tgz in artifacts/prebuild-*/*.zip artifacts/prebuild-*/*.tar.gz artifacts/prebuild-*; do
@@ -131,6 +132,7 @@ jobs:
       # -- quick glance that everything’s in place
       - name: List resulting prebuilds
         run: |
+          cd module
           echo "=== prebuilds ==="
           find prebuilds -type f | sort
 
