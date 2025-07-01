@@ -56,11 +56,14 @@
                     "OS=='win'",
                     {
                         "libraries": [
-                            "<(module_root_dir)\\lib_ext\\libili2c.lib"
+                            "libili2c.lib"
                         ],
                         "copies": [
                             {
-                                "files": [ "lib_ext\\libili2c.dll", "lib_ext\\libili2c.lib" ],
+                                "files": [ 
+                                    "lib_ext\\libili2c.dll", 
+                                    "lib_ext\\libili2c.lib"
+                                ],
                                 "destination": "<(module_root_dir)/build/Release"
                             }
                         ]
