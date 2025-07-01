@@ -75,7 +75,7 @@ jobs:
         if: ${{ success() }}
         uses: actions/upload-artifact@v4
         with:
-          name: artifacts
+          name: lib-${{matrix.plat-name}}
           path: |
             module/prebuilds/${{matrix.plat-name}}
 
