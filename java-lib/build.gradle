@@ -57,3 +57,20 @@ graalvmNative {
         */
     }
 }
+
+tasks.register('deleteSharedLibs', Delete) {
+   delete files("../module/lib_ext")
+}
+
+tasks.register('copySharedLibs', Copy) {
+    dependsOn 'deleteSharedLibs'
+    from ('build/native/nativeCompile') {
+        include '*.h'
+        include '*.lib'
+        include '*.so'
+        include '*.dll'
+        include '*.dylib'
+    }
+    into '../module/lib_ext/'
+}
+nativeCompile.finalizedBy(copySharedLibs)

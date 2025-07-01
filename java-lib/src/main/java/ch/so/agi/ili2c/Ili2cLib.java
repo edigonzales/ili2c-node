@@ -21,19 +21,14 @@ import org.graalvm.nativeimage.c.type.CTypeConversion;
 public class Ili2cLib {
     
     @CEntryPoint(name = "compileModel")
-    public static int compileModel(IsolateThread thread, CCharPointer iliFile, CCharPointer logFile) {
-        
-        System.out.println("Hallo Welt.");
-        
+    public static int compileModel(IsolateThread thread, CCharPointer iliFile, CCharPointer logFile) {        
         FileLogger fileLogger = new FileLogger(new File(CTypeConversion.toJavaString(logFile)), false);
         EhiLogger.getInstance().addListener(fileLogger);
-
         
         IliManager manager = new IliManager();        
         manager.setRepositories(Ili2cSettings.DEFAULT_ILIDIRS.split(";"));
         //manager.setRepositories(ilidirs.split(";"));
         ArrayList<String> iliFiles = new ArrayList<String>();
-        //ilifiles.add("src/test/data/SO_ARP_SEin_Konfiguration_20250115.ili");
         iliFiles.add(CTypeConversion.toJavaString(iliFile));
         Configuration config;
         try {
