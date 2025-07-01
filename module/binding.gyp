@@ -10,10 +10,6 @@
                 "lib_ext",
                 "."
             ],
-            "libraries": [
-                "-L<(module_root_dir)/lib_ext",
-                "-lili2c"
-            ],
             "cflags_cc": [
                 "-std=c++17",
                 "-fexceptions"

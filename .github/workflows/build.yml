@@ -68,7 +68,15 @@ jobs:
           npm install --save-dev prebuildify
           npx node-gyp rebuild
           npx prebuildify --target 22.0.0
+          ls -la prebuilds
 
+      - name: 'Upload build artifact'
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: |
+            module/prebuilds/
 
 
 
