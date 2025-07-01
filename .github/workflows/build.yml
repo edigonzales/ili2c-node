@@ -54,7 +54,7 @@ jobs:
           name: reports-native
           path: java-lib/build/reports/tests/
 
-      - name: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
 
