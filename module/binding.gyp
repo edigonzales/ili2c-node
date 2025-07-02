@@ -57,6 +57,11 @@
         [
           "OS=='linux'",
           {
+            "link_settings": {
+              "ldflags": [
+                "-Wl,-rpath,'$$ORIGIN'"
+              ]
+            },
             "libraries": [
               "-L<(module_root_dir)/lib_ext/linux",
               "-lili2c"
