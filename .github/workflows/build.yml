@@ -106,6 +106,8 @@ jobs:
         run: |
           set -e
           cd module
+          rm binding.gyp
+          rm -rf src
           mkdir -p prebuilds
           cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64/darwin-arm64 ./prebuilds/darwin-arm64
           cp ./prebuilds/darwin-arm64/ili2c.node ./prebuilds/darwin-arm64/ili2caddon.node 

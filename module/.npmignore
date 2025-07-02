@@ -1,0 +1,3 @@
+binding.gyp
+src/
+*.cpp
