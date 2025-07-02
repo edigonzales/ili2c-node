@@ -131,6 +131,16 @@ jobs:
           npm pack
           ls -la
 
+      - name: Authenticate with npm
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish
+        shell: bash
+        run: | 
+          cd module
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   # release:
   #   needs: [build]
