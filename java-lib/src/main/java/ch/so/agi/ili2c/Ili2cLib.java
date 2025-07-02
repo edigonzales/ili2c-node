@@ -51,7 +51,6 @@ public class Ili2cLib {
         try {
             config = manager.getConfigWithFiles(iliFiles);
         } catch (Ili2cException e) {
-            System.out.println("*** 1");
             EhiLogger.getInstance().removeListener(fileLogger);
             return 1;
         } 
@@ -64,8 +63,6 @@ public class Ili2cLib {
         try {
             td = ch.interlis.ili2c.Ili2c.runCompiler(config);
         } catch (Ili2cFailure e) {
-            System.out.println("*** 2");
-            e.printStackTrace();
             EhiLogger.logError("...compiler run failed " + dateOut);
             EhiLogger.getInstance().removeListener(fileLogger);
             return 1;
