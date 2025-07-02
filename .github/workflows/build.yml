@@ -101,9 +101,6 @@ jobs:
           pattern: prebuild-*
           path: ./artifacts
 
-
-##### TODO das stimmt nicht mehr, ist Müll.
-      # -- move (or copy) each artifact’s prebuilds/ into the root dir
       - name: Merge prebuilds into package folder
         run: |
           set -e
@@ -114,23 +111,24 @@ jobs:
           ls -la prebuilds/
           ls -la prebuilds/darwin-arm64
 
-          # # each artifact lives under artifacts/prebuild-<os>-<arch>/
-          # for artifact in artifacts/prebuild-*; do
-          #   # 1) if it already contains a prebuilds/ folder, copy that
-          #   if [ -d "$artifact/prebuilds" ]; then
-          #     cp -R "$artifact/prebuilds/"* prebuilds/
-          #   # 2) else it probably unpacked directly into <arch>/…
-          #   else
-          #     cp -R "$artifact/"* prebuilds/
-          #   fi
-          # done
-
-      # -- quick glance that everything’s in place
       - name: List resulting prebuilds
         run: |
           cd module
           echo "=== prebuilds ==="
           find prebuilds -type f | sort
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: "https://registry.npmjs.org"
+
+      - name: 'Create local package (just for debugging)'
+        shell: bash
+        run: |
+          cd module
+          npm pack
+          ls -la
+
 
   # release:
   #   needs: [build]
