@@ -57,6 +57,7 @@ public class Ili2cLib {
         try {
             td = ch.interlis.ili2c.Ili2c.runCompiler(config);
         } catch (Ili2cFailure e) {
+            e.printStackTrace();
             EhiLogger.logError("...compiler run failed " + dateOut);
             EhiLogger.getInstance().removeListener(fileLogger);
             return 1;

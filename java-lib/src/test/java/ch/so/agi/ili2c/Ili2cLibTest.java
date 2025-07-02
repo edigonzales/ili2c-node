@@ -21,12 +21,12 @@ public class Ili2cLibTest {
         Path logFile = tempDirectory.toPath().resolve("ili2c.log");
 
         // Execute
-        int ret = Ili2cLib.compileModelImpl("src/test/Test1.ili", logFile.toAbsolutePath().toString());
+        int ret = Ili2cLib.compileModelImpl("src/test/data/Test1.ili", logFile.toAbsolutePath().toString());
 //        int ret = Ili2cLib.compileModelImpl("src/test/data/Test1.ili", "/Users/stefan/tmp/ili2c.log");
         
         // Validate
-        assertTrue(true);
+        assertEquals(0, ret);
         String logContent = Files.readString(logFile);
-        System.out.println("******"+logContent);
+        assertTrue(logContent.contains("Info: ...compiler run done"));
     }
 }
