@@ -102,16 +102,18 @@ jobs:
           path: ./artifacts
 
       - name: Merge prebuilds into package folder
+        shell: bash
         run: |
           set -e
           cd module
           mkdir -p prebuilds
-          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64 ./prebuilds/darwin-arm64
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64/darwin-arm64 ./prebuilds/darwin-arm64
           #cp ./prebuilds/darwin-arm64/ili2c.node ./prebuilds/darwin-arm64/ili2caddon.node 
-          ls -la prebuilds/
-          ls -la prebuilds/darwin-arm64
+          ls -la ./prebuilds/
+          ls -la ./prebuilds/darwin-arm64
 
       - name: List resulting prebuilds
+        shell: bash
         run: |
           cd module
           echo "=== prebuilds ==="
