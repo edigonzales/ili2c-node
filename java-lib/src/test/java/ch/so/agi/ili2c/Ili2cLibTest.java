@@ -21,8 +21,8 @@ public class Ili2cLibTest {
         Path logFile = tempDirectory.toPath().resolve("ili2c.log");
 
         // Execute
-        Ili2cLib ili2c = new Ili2cLib();
-        //ili2c.runCompiler(logFile.toAbsolutePath().toString());
+        int ret = Ili2cLib.compileModelImpl("src/test/Test1.ili", logFile.toAbsolutePath().toString());
+//        int ret = Ili2cLib.compileModelImpl("src/test/data/Test1.ili", "/Users/stefan/tmp/ili2c.log");
         
         // Validate
         assertTrue(true);
