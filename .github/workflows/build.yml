@@ -110,7 +110,6 @@ jobs:
           cd module
           mkdir -p prebuilds
           cp -R ../artifacts/prebuild-darwin-arm64 darwin-arm64
-          ls -la prebuilds/darwin-arm64
           ls -la prebuilds/
 
           # # each artifact lives under artifacts/prebuild-<os>-<arch>/
