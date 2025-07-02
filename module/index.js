@@ -20,9 +20,6 @@ const path = require('path');
 
 const native = require("node-gyp-build")(path.join(__dirname));
 
-console.log("***********.   " + native);
-
-
 let initialized = false;
 
 // wrapper function that automatically handles isolate
