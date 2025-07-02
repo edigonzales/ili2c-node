@@ -14,15 +14,15 @@ jobs:
       fail-fast: true
       matrix:
         # https://github.com/actions/runner-images
-        os: [ ubuntu-24.04, macos-14, windows-2022 ]
-        #os: [ ubuntu-24.04]
+        #os: [ ubuntu-24.04, macos-14, windows-2022 ]
+        os: [ macos-14 ]
         include:
-          - os: 'ubuntu-24.04'
-            plat-name: 'linux-x64'
+          # - os: 'ubuntu-24.04'
+          #   plat-name: 'linux-x64'
           - os: 'macos-14'
             plat-name: 'darwin-arm64'
-          - os: 'windows-2022'
-            plat-name: 'win32-x64'
+          # - os: 'windows-2022'
+          #   plat-name: 'win32-x64'
 
     runs-on: ${{ matrix.os }}
 
@@ -87,20 +87,17 @@ jobs:
 
   publish:
     name: Collect artifacts and publish to npm
-    needs: build              # Wait for all matrix builds
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
 
-      # -- checkout is optional but handy for README, package.json, etc.
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # -- download all artifacts created by the matrix job
       - name: Download prebuild artifacts
         uses: actions/download-artifact@v4
         with:
-          # wildcard grabs every artifact the build job uploaded
           pattern: prebuild-*
           path: ./artifacts
 
@@ -112,17 +109,20 @@ jobs:
           set -e
           cd module
           mkdir -p prebuilds
+          cp -R ../artifacts/prebuild-darwin-arm64 darwin-arm64
+          ls -la prebuilds/darwin-arm64
+          ls -la prebuilds/
 
-          # each artifact lives under artifacts/prebuild-<os>-<arch>/
-          for artifact in artifacts/prebuild-*; do
-            # 1) if it already contains a prebuilds/ folder, copy that
-            if [ -d "$artifact/prebuilds" ]; then
-              cp -R "$artifact/prebuilds/"* prebuilds/
-            # 2) else it probably unpacked directly into <arch>/…
-            else
-              cp -R "$artifact/"* prebuilds/
-            fi
-          done
+          # # each artifact lives under artifacts/prebuild-<os>-<arch>/
+          # for artifact in artifacts/prebuild-*; do
+          #   # 1) if it already contains a prebuilds/ folder, copy that
+          #   if [ -d "$artifact/prebuilds" ]; then
+          #     cp -R "$artifact/prebuilds/"* prebuilds/
+          #   # 2) else it probably unpacked directly into <arch>/…
+          #   else
+          #     cp -R "$artifact/"* prebuilds/
+          #   fi
+          # done
 
       # -- quick glance that everything’s in place
       - name: List resulting prebuilds
