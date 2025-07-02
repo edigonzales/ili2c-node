@@ -109,8 +109,10 @@ jobs:
           set -e
           cd module
           mkdir -p prebuilds
-          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64 ./prebuilds/darwin-arm64          
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64 ./prebuilds/darwin-arm64
+          cp ./prebuilds/darwin-arm64/ili2c.node ./prebuilds/darwin-arm64/ili2caddon.node 
           ls -la prebuilds/
+          ls -la prebuilds/darwin-arm64
 
           # # each artifact lives under artifacts/prebuild-<os>-<arch>/
           # for artifact in artifacts/prebuild-*; do
