@@ -15,7 +15,7 @@ MODEL Test1 (de) AT "mailto:edigonzales@localhost" VERSION "20250701" =
             attrInt : -1000 .. 1000;
         END StructA;
 
-        CLASS ClassA =
+        XXCLASS ClassA =
             attrText : TEXT*60;
             attrStruct : StructA;
             attrBag : BAG OF StructA;

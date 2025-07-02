@@ -10,7 +10,7 @@ MODEL Test1 (de) AT "mailto:edigonzales@localhost" VERSION "20250701" =
     
     TOPIC Topic1 =
     
-        STRUCTURE StructA =
+        XXSTRUCTURE StructA =
             attrText : TEXT*3;
             attrInt : -1000 .. 1000;
         END StructA;

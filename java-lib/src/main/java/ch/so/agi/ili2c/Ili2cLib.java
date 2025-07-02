@@ -2,6 +2,7 @@ package ch.so.agi.ili2c;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,6 +32,11 @@ public class Ili2cLib {
     }
     
     public static int compileModelImpl(String iliFile, String logFile) {
+        try {
+            Files.deleteIfExists(new File(logFile).toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         FileLogger fileLogger = new FileLogger(new File(logFile), false);
         EhiLogger.getInstance().addListener(fileLogger);
         
@@ -45,6 +51,7 @@ public class Ili2cLib {
         try {
             config = manager.getConfigWithFiles(iliFiles);
         } catch (Ili2cException e) {
+            System.out.println("*** 1");
             EhiLogger.getInstance().removeListener(fileLogger);
             return 1;
         } 
@@ -57,6 +64,7 @@ public class Ili2cLib {
         try {
             td = ch.interlis.ili2c.Ili2c.runCompiler(config);
         } catch (Ili2cFailure e) {
+            System.out.println("*** 2");
             e.printStackTrace();
             EhiLogger.logError("...compiler run failed " + dateOut);
             EhiLogger.getInstance().removeListener(fileLogger);

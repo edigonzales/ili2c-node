@@ -1,3 +1,4 @@
+const fs = require('fs');
 const ili2c = require('./index'); // or require('ili2c') if published
 
 try {
@@ -7,6 +8,10 @@ try {
   } else {
     console.log("❌ Model is invalid.");
   }
+
+  const content = fs.readFileSync('test.log', 'utf-8');
+  console.log(content);
+
 } catch (e) {
   console.error("🔥 Critical failure:", e);
 }
