@@ -1,12 +1,11 @@
 {
   "name": "ili2c",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A simple Node.js wrapper to compile INTERLIS models.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "prebuildify --napi --strip",
-    "install": "node-gyp-build"
+    "prebuild": "prebuildify --napi --strip"
   },
   "repository": {
     "type": "git",
@@ -24,7 +23,7 @@
   },
   "homepage": "https://github.com/edigonzales/ili2c-node#readme",
   "dependencies": {
-    "node-gyp-build": "^4.8.4"
+    "node-addon-api": "^8.4.0"
   },
   "files": [
     "prebuilds/**/*",
@@ -33,7 +32,6 @@
     "README.md"
   ],
   "devDependencies": {
-    "node-addon-api": "^8.4.0",
     "node-gyp": "^11.2.0",
     "prebuildify": "^6.0.1"
   },
