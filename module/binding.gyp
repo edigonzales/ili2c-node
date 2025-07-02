@@ -21,7 +21,7 @@
       ],
       "conditions": [
         [
-          "OS=='mac'",
+          "OS=='mac' and target_arch=='arm64'",
           {
             "libraries": [
               "-L<(module_root_dir)/lib_ext/mac",
@@ -33,6 +33,23 @@
                   "lib_ext/mac/libili2c.dylib"
                 ],
                 "destination": "<(module_root_dir)/prebuilds/darwin-arm64/"
+              }
+            ]
+          }
+        ],
+        [
+          "OS=='mac' and target_arch=='x64'",
+          {
+            "libraries": [
+              "-L<(module_root_dir)/lib_ext/mac",
+              "-lili2c"
+            ],
+            "copies": [
+              {
+                "files": [
+                  "lib_ext/mac/libili2c.dylib"
+                ],
+                "destination": "<(module_root_dir)/prebuilds/darwin-x64/"
               }
             ]
           }
