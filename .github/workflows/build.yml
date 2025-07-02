@@ -14,17 +14,17 @@ jobs:
       fail-fast: true
       matrix:
         # https://github.com/actions/runner-images
-        os: [ ubuntu-24.04, macos-14, macos-13, windows-2022 ]
-        #os: [ macos-14, macos-13 ]
+        #os: [ ubuntu-24.04, macos-14, macos-13, windows-2022 ]
+        os: [ macos-14 ]
         include:
-          - os: 'ubuntu-24.04'
-            plat-name: 'linux-x64'
           - os: 'macos-14'
             plat-name: 'darwin-arm64'
-          - os: 'macos-13'
-            plat-name: 'darwin-x64'
-          - os: 'windows-2022'
-            plat-name: 'win32-x64'
+          # - os: 'macos-13'
+          #   plat-name: 'darwin-x64'
+          # - os: 'ubuntu-24.04'
+          #   plat-name: 'linux-x64'
+          # - os: 'windows-2022'
+          #   plat-name: 'win32-x64'
 
     runs-on: ${{ matrix.os }}
 
@@ -78,6 +78,12 @@ jobs:
           cd module/prebuilds/${{matrix.plat-name}}
           install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/libili2c.dylib ili2c.node
           otool -L ili2c.node
+
+      - name: Test node module
+        shell: bash
+        run: |
+          cd module
+          node test.js
 
       - name: 'Upload build artifact'
         if: ${{ success() }}
