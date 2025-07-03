@@ -69,7 +69,7 @@ jobs:
           ls -la lib_ext
           npm ci
           npx prebuildify --napi --strip --target 22.0.0
-          #npm install --save-dev electron-rebuild
+          npm install --save-dev electron-rebuild
           #npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
           #mkdir -p prebuilds/darwin-arm64/node 
           #mv prebuilds/darwin-arm64/ili2c.node prebuilds/darwin-arm64/node/
