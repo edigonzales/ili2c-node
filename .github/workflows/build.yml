@@ -93,6 +93,7 @@ jobs:
         run: |
           source .venv/bin/activate
           cd module
+          mkdir -p prebuilds/${{matrix.plat-name}}/electron 
           npm install --save-dev electron-rebuild
           npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
           cp build/Release/ili2caddon.node prebuilds/${{matrix.plat-name}}/electron/ili2c.node
