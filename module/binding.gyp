@@ -59,7 +59,7 @@
           {
             "link_settings": {
               "ldflags": [
-                "-Wl,-rpath,'$$ORIGIN'"
+                "-Wl,-rpath,'$$ORIGIN/..'"
               ]
             },
             "libraries": [
