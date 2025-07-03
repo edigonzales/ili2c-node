@@ -71,7 +71,12 @@ jobs:
           npx prebuildify --napi --strip --target 22.0.0
           mkdir -p prebuilds/${{matrix.plat-name}}/node 
           mv prebuilds/${{matrix.plat-name}}/ili2c.node prebuilds/${{matrix.plat-name}}/node/
-          ls -la prebuilds
+          ls -la prebuilds/${{matrix.plat-name}}/node/
+
+      - name: Ensure distutils for Python
+        run: |
+          python3 -m ensurepip --upgrade
+          python3 -m pip install setuptools
 
       - name: Build electron module
         id: buildElectronModule
