@@ -39,7 +39,8 @@ public class Ili2cLib {
         }
         FileLogger fileLogger = new FileLogger(new File(logFile), false);
         EhiLogger.getInstance().addListener(fileLogger);
-        
+
+        EhiLogger.logState("ili2c-"+TransferDescription.getVersion());
         EhiLogger.logState("ilifile <" + iliFile + ">");
         
         IliManager manager = new IliManager();        

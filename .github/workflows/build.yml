@@ -14,17 +14,17 @@ jobs:
       fail-fast: true
       matrix:
         # https://github.com/actions/runner-images
-        os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
-        #os: [ macos-14 ]
+        #os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
+        os: [ macos-14 ]
         include:
           - os: 'macos-14'
             plat-name: 'darwin-arm64'
-          - os: 'macos-13'
-            plat-name: 'darwin-x64'
-          - os: 'ubuntu-24.04'
-            plat-name: 'linux-x64'
-          - os: 'windows-2022'
-            plat-name: 'win32-x64'
+          # - os: 'macos-13'
+          #   plat-name: 'darwin-x64'
+          # - os: 'ubuntu-24.04'
+          #   plat-name: 'linux-x64'
+          # - os: 'windows-2022'
+          #   plat-name: 'win32-x64'
 
     runs-on: ${{ matrix.os }}
 
@@ -69,6 +69,12 @@ jobs:
           ls -la lib_ext
           npm ci
           npx prebuildify --napi --strip --target 22.0.0
+          npm install --save-dev electron-rebuild
+          npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
+          mkdir -p prebuilds/darwin-arm64/node 
+          mv prebuilds/darwin-arm64/ili2c.node prebuilds/darwin-arm64/node/
+          mkdir -p prebuilds/darwin-arm64/electron
+          cp build/Release/ili2caddon.node prebuilds/darwin-arm64/electron/ili2c.node
           ls -la prebuilds
 
       - name: 'Fix dylib look up'

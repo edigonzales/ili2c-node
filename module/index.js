@@ -18,7 +18,18 @@ const path = require('path');
 // // native binding
 // const native = require(path.join(prebuildDir, 'ili2c.node'));
 
-const native = require("node-gyp-build")(path.join(__dirname));
+// const native = require("node-gyp-build")(path.join(__dirname));
+
+const platform = process.platform;
+const arch = process.arch;
+
+let runtime = "node";
+if (process.versions.electron) {
+  runtime = "electron";
+}
+
+const nativePath = path.join(__dirname, 'prebuilds', `${platform}-${arch}`, runtime, 'ili2c.node');
+const native = require(nativePath);
 
 let initialized = false;
 
