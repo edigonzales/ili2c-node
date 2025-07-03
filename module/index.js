@@ -28,6 +28,11 @@ if (process.versions.electron) {
   runtime = "electron";
 }
 
+if (process.platform === "win32") {
+  const dllFolder = path.join(__dirname, 'prebuilds', `${platform}-${arch}`);
+  process.env.PATH = `${dllFolder};${process.env.PATH}`;
+}
+
 const nativePath = path.join(__dirname, 'prebuilds', `${platform}-${arch}`, runtime, 'ili2c.node');
 const native = require(nativePath);
 
