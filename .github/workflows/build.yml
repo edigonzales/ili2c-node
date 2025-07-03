@@ -146,7 +146,7 @@ jobs:
           rm binding.gyp
           rm -rf src
           mkdir -p prebuilds
-          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64/ ./prebuilds
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64/* ./prebuilds
           #cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-x64/darwin-x64 ./prebuilds/darwin-x64
           #cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-linux-x64/linux-x64 ./prebuilds/linux-x64
           #cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-win32-x64/win32-x64 ./prebuilds/win32-x64
