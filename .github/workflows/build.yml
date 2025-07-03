@@ -14,17 +14,17 @@ jobs:
       fail-fast: true
       matrix:
         # https://github.com/actions/runner-images
-        #os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
-        os: [ macos-14 ]
+        os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
+        #os: [ macos-14 ]
         include:
           - os: 'macos-14'
             plat-name: 'darwin-arm64'
-          # - os: 'macos-13'
-          #   plat-name: 'darwin-x64'
-          # - os: 'ubuntu-24.04'
-          #   plat-name: 'linux-x64'
-          # - os: 'windows-2022'
-          #   plat-name: 'win32-x64'
+          - os: 'macos-13'
+            plat-name: 'darwin-x64'
+          - os: 'ubuntu-24.04'
+            plat-name: 'linux-x64'
+          - os: 'windows-2022'
+            plat-name: 'win32-x64'
 
     runs-on: ${{ matrix.os }}
 
@@ -149,7 +149,7 @@ jobs:
           cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64/* ./prebuilds
           cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-x64/* ./prebuilds
           cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-linux-x64/* ./prebuilds
-          #cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-win32-x64/* ./prebuilds
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-win32-x64/* ./prebuilds
           ls -la ./prebuilds/
           ls -la ./prebuilds/darwin-arm64
 
