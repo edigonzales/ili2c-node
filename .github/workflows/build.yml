@@ -90,7 +90,11 @@ jobs:
         id: buildElectronModule
         shell: bash
         run: |
-          source .venv/bin/activate
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            source .venv/Scripts/activate
+          else
+            source .venv/bin/activate
+          fi          
           cd module
           mkdir -p prebuilds/${{matrix.plat-name}}/electron 
           npm install --save-dev electron-rebuild
