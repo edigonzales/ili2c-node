@@ -75,13 +75,15 @@ jobs:
 
       - name: Ensure distutils for Python
         run: |
-          python3 -m ensurepip --upgrade
-          python3 -m pip install setuptools
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install setuptools
 
       - name: Build electron module
         id: buildElectronModule
         shell: bash
         run: |
+          source .venv/bin/activate
           cd module
           npm install --save-dev electron-rebuild
           npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
