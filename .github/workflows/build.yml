@@ -69,13 +69,20 @@ jobs:
           ls -la lib_ext
           npm ci
           npx prebuildify --napi --strip --target 22.0.0
-          npm install --save-dev electron-rebuild
-          #npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
-          #mkdir -p prebuilds/darwin-arm64/node 
-          #mv prebuilds/darwin-arm64/ili2c.node prebuilds/darwin-arm64/node/
-          #mkdir -p prebuilds/darwin-arm64/electron
-          #cp build/Release/ili2caddon.node prebuilds/darwin-arm64/electron/ili2c.node
+          mkdir -p prebuilds/${{matrix.plat-name}}/node 
+          mv prebuilds/${{matrix.plat-name}}/ili2c.node prebuilds/${{matrix.plat-name}}/node/
           ls -la prebuilds
+
+      - name: Build electron module
+        id: buildElectronModule
+        shell: bash
+        run: |
+          cd module
+          npm install --save-dev electron-rebuild
+          npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
+          #cp build/Release/ili2caddon.node prebuilds/${{matrix.plat-name}}/electron/ili2c.node
+          ls -la prebuilds
+
 
       - name: 'Fix dylib look up'
         if: ${{ runner.os == 'macOS' }}
