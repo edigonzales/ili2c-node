@@ -81,6 +81,7 @@ jobs:
           otool -L ili2c.node
 
       - name: Ensure distutils for Python
+        shell: bash
         run: |
           python3 -m venv .venv
           if [[ "$RUNNER_OS" == "Windows" ]]; then
