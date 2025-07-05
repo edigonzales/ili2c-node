@@ -60,7 +60,7 @@ graalvmNative {
 }
 
 tasks.register('deleteSharedLibs', Delete) {
-   delete files("../module/lib_ext")
+   delete files("../nodejs/lib_ext")
 }
 
 def osProperty = System.getProperty("os.name").toLowerCase()
