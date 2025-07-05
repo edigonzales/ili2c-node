@@ -18,6 +18,7 @@ dependencies {
     api libs.ili2c.tool
     api libs.iox.ili
     api libs.ehibasics
+    api libs.antlr
 }
 
 sourceCompatibility = '21'
@@ -46,7 +47,7 @@ graalvmNative {
             buildArgs.add('--enable-url-protocols=http,https')
             buildArgs.add("-H:+AllowDeprecatedBuilderClassesOnImageClasspath")
             // https://www.graalvm.org/latest/reference-manual/native-image/optimizations-and-performance/
-            buildArgs.add('-Ob') 
+            buildArgs.add('-Os') 
             buildArgs.add('-march=compatibility')
         }
         /*
