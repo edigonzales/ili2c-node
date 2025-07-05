@@ -62,7 +62,6 @@ process.on('exit', () => {
   }
 });
 
-// expose only compileModel
 module.exports = {
   compileModel, prettyPrint
 };
