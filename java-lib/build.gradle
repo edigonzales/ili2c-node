@@ -85,6 +85,6 @@ tasks.register('copySharedLibs', Copy) {
         include '*.dll'
         include '*.dylib'
     }
-    into "../module/lib_ext/$osName"
+    into "../nodejs/lib_ext/$osName"
 }
 nativeCompile.finalizedBy(copySharedLibs)
