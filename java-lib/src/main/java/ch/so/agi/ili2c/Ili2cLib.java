@@ -24,6 +24,7 @@ import ch.interlis.ili2c.Ili2cFailure;
 import ch.interlis.ili2c.Ili2cSettings;
 import ch.interlis.ili2c.ModelScan;
 import ch.interlis.ili2c.config.Configuration;
+import ch.interlis.ili2c.generator.Imd16Generator;
 import ch.interlis.ili2c.generator.Interlis2Generator;
 import ch.interlis.ili2c.metamodel.Ili2cMetaAttrs;
 import ch.interlis.ili2c.metamodel.Model;
@@ -40,6 +41,24 @@ import org.graalvm.nativeimage.c.type.CTypeConversion;
 
 
 public class Ili2cLib {
+    @CEntryPoint(name = "createIlisMetas16")
+    public static int createIlisMetas16(IsolateThread thread, CCharPointer iliFile, CCharPointer xtfFile) {   
+        String iliFileStr = CTypeConversion.toJavaString(iliFile);
+        String xtfFileStr = CTypeConversion.toJavaString(xtfFile);
+        return createIlisMetas16Impl(iliFileStr, xtfFileStr);        
+    }
+
+    public static int createIlisMetas16Impl(String iliFile, String xtfFile) {
+        try {
+            TransferDescription td = getTransferDescription(iliFile);
+            Imd16Generator.generate(new java.io.File(xtfFile), td, "ili2c" +
+                    "-" + TransferDescription.getVersion());
+        } catch (Ili2cException e) {
+            e.printStackTrace();
+            return 1;
+        }
+        return 0;
+    }
     
     @CEntryPoint(name = "prettyPrint")
     public static int prettyPrint(IsolateThread thread, CCharPointer iliFile) {   

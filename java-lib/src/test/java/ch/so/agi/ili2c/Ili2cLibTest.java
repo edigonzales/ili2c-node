@@ -18,6 +18,22 @@ public class Ili2cLibTest {
     File tempDirectory;
     
     @Test
+    public void createIlisMeta16_Ok() throws IOException {
+        // Prepare
+        Path iliFile = Paths.get("src/test/data/SO_ARP_SEin_Konfiguration_20250115.ili");
+        Path xtfFile = tempDirectory.toPath().resolve("SO_ARP_SEin_Konfiguration_20250115.xtf");
+        
+        // Execute
+        int ret = Ili2cLib.createIlisMetas16Impl(iliFile.toAbsolutePath().toString(), xtfFile.toAbsolutePath().toString());
+        
+        // Validate
+        assertEquals(0, ret);
+        String content = Files.readString(xtfFile);
+        String expected = Files.readString(Paths.get("src/test/data/SO_ARP_SEin_Konfiguration_20250115.xtf"));
+        assertEquals(expected.trim(), content.trim());
+    }
+    
+    @Test
     public void prettyPrint_Ok() throws IOException {
         // Prepare
         Path source = Paths.get("src/test/data/SO_ARP_SEin_Konfiguration_20250116_unpretty.ili");
