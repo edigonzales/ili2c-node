@@ -47,6 +47,14 @@ function compileModel(iliFile, logFile) {
   return native.compileModel(iliFile, logFile);
 }
 
+function prettyPrint(iliFile) {
+  if (!initialized) {
+    native.initIsolate();
+    initialized = true;
+  }
+  return native.prettyPrint(iliFile);
+}
+
 // auto-teardown on exit
 process.on('exit', () => {
   if (initialized) {
@@ -56,5 +64,5 @@ process.on('exit', () => {
 
 // expose only compileModel
 module.exports = {
-  compileModel
+  compileModel, prettyPrint
 };

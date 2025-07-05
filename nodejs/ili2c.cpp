@@ -51,6 +51,33 @@ Napi::Value CompileModel(const Napi::CallbackInfo& info) {
     return Napi::Boolean::New(env, res == 0);
 }
 
+// pretty print
+Napi::Value PrettyPrint(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    if (thread == nullptr) {
+        Napi::Error::New(env, "Isolate not initialized. Call initIsolate first.").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    if (info.Length() < 1 || !info[0].IsString()) {
+        Napi::TypeError::New(env, "Expected (string iliFile)").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    std::string iliFile = info[0].As<Napi::String>();
+
+    int res = prettyPrint(thread, const_cast<char*>(iliFile.c_str()));
+
+    if (res < 0) {
+        Napi::Error::New(env, "prettyPrint critical failure with code: " + std::to_string(res)).ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    // 0 means success, 1 means model compile failure
+    return Napi::Boolean::New(env, res == 0);
+}
+
 // teardown
 Napi::Value TearDownIsolate(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
@@ -68,6 +95,7 @@ Napi::Value TearDownIsolate(const Napi::CallbackInfo& info) {
 Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
     exports.Set("initIsolate", Napi::Function::New(env, InitIsolate));
     exports.Set("compileModel", Napi::Function::New(env, CompileModel));
+    exports.Set("prettyPrint", Napi::Function::New(env, PrettyPrint));
     exports.Set("tearDownIsolate", Napi::Function::New(env, TearDownIsolate));
     return exports;
 }
