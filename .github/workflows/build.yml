@@ -64,7 +64,7 @@ jobs:
         id: buildNodeModule
         shell: bash
         run: |
-          cd module
+          cd nodejs
           ls -la lib_ext
           npm ci
           npx prebuildify --napi --strip --target 22.0.0
@@ -76,7 +76,7 @@ jobs:
         if: ${{ runner.os == 'macOS' }}
         shell: bash
         run: |
-          cd module/prebuilds/${{matrix.plat-name}}/node
+          cd nodejs/prebuilds/${{matrix.plat-name}}/node
           install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
           otool -L ili2c.node
 
@@ -100,7 +100,7 @@ jobs:
           else
             source .venv/bin/activate
           fi          
-          cd module
+          cd nodejs
           mkdir -p prebuilds/${{matrix.plat-name}}/electron 
           npm install --save-dev electron-rebuild
           npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
@@ -111,14 +111,14 @@ jobs:
         if: ${{ runner.os == 'macOS' }}
         shell: bash
         run: |
-          cd module/prebuilds/${{matrix.plat-name}}/electron
+          cd nodejs/prebuilds/${{matrix.plat-name}}/electron
           install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
           otool -L ili2c.node
 
       - name: Test node module
         shell: bash
         run: |
-          cd module
+          cd nodejs
           node test.js
 
       - name: 'Upload build artifact'
@@ -126,7 +126,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: prebuild-${{matrix.plat-name}}
-          path: module/prebuilds/**
+          path: nodejs/prebuilds/**
 
 
   publish:
@@ -151,7 +151,7 @@ jobs:
         shell: bash
         run: |
           set -e
-          cd module
+          cd nodejs
           rm binding.gyp
           rm -rf src
           mkdir -p prebuilds
@@ -165,7 +165,7 @@ jobs:
       - name: List resulting prebuilds
         shell: bash
         run: |
-          cd module
+          cd nodejs
           echo "=== prebuilds ==="
           find prebuilds -type f | sort
 
@@ -177,7 +177,7 @@ jobs:
       - name: 'Create local package (just for debugging)'
         shell: bash
         run: |
-          cd module
+          cd nodejs
           npm pack
           ls -la
 
@@ -186,7 +186,7 @@ jobs:
 
       - name: Bump version
         run: |
-          cd module
+          cd nodejs
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           npm version patch --no-git-tag-version
@@ -199,7 +199,7 @@ jobs:
       - name: Publish
         shell: bash
         run: | 
-          cd module
+          cd nodejs
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
