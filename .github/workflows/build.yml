@@ -143,29 +143,29 @@ jobs:
   #         fi          
   #         pip install setuptools
 
-  #     - name: Build electron module
-  #       id: buildElectronModule
-  #       shell: bash
-  #       run: |
-  #         if [[ "$RUNNER_OS" == "Windows" ]]; then
-  #           source .venv/Scripts/activate
-  #         else
-  #           source .venv/bin/activate
-  #         fi          
-  #         cd nodejs
-  #         mkdir -p prebuilds/${{matrix.plat-name}}/electron 
-  #         npm install --save-dev electron-rebuild
-  #         npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
-  #         cp build/Release/ili2caddon.node prebuilds/${{matrix.plat-name}}/electron/ili2c.node
-  #         ls -la prebuilds/${{matrix.plat-name}}/electron/
+      - name: Build electron module
+        id: buildElectronModule
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            source .venv/Scripts/activate
+          else
+            source .venv/bin/activate
+          fi          
+          cd nodejs
+          mkdir -p prebuilds/${{matrix.plat-name}}/electron 
+          npm install --save-dev electron-rebuild
+          npx electron-rebuild --force --parallel --disable-logging -v 35.5.1
+          cp build/Release/ili2caddon.node prebuilds/${{matrix.plat-name}}/electron/ili2c.node
+          ls -la prebuilds/${{matrix.plat-name}}/electron/
 
-  #     - name: 'Fix dylib look up (electron)'
-  #       if: ${{ runner.os == 'macOS' }}
-  #       shell: bash
-  #       run: |
-  #         cd nodejs/prebuilds/${{matrix.plat-name}}/electron
-  #         install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
-  #         otool -L ili2c.node
+      - name: 'Fix dylib look up (electron)'
+        if: ${{ runner.os == 'macOS' }}
+        shell: bash
+        run: |
+          cd nodejs/prebuilds/${{matrix.plat-name}}/electron
+          install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
+          otool -L ili2c.node
 
   #     - name: Test node module
   #       shell: bash
