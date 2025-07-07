@@ -167,6 +167,19 @@ jobs:
           install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
           otool -L ili2c.node
 
+      - name: Test node module
+        shell: bash
+        run: |
+          cd nodejs
+          node test.js
+
+      - name: 'Upload Node.js build artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: nodejs-prebuild-${{matrix.plat-name}}
+          path: nodejs/prebuilds/**
+
+
   #     - name: Test node module
   #       shell: bash
   #       run: |
