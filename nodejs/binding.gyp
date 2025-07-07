@@ -24,13 +24,13 @@
           "OS=='mac' and target_arch=='arm64'",
           {
             "libraries": [
-              "-L<(module_root_dir)/lib_ext/mac",
+              "-L<(module_root_dir)/lib_ext/darwin-arm64",
               "-lili2c"
             ],
             "copies": [
               {
                 "files": [
-                  "lib_ext/mac/libili2c.dylib"
+                  "lib_ext/darwin-arm64/libili2c.dylib"
                 ],
                 "destination": "<(module_root_dir)/prebuilds/darwin-arm64/"
               }
@@ -41,13 +41,13 @@
           "OS=='mac' and target_arch=='x64'",
           {
             "libraries": [
-              "-L<(module_root_dir)/lib_ext/mac",
+              "-L<(module_root_dir)/lib_ext/darwin-x64",
               "-lili2c"
             ],
             "copies": [
               {
                 "files": [
-                  "lib_ext/mac/libili2c.dylib"
+                  "lib_ext/darwin-x64/libili2c.dylib"
                 ],
                 "destination": "<(module_root_dir)/prebuilds/darwin-x64/"
               }
@@ -63,13 +63,13 @@
               ]
             },
             "libraries": [
-              "-L<(module_root_dir)/lib_ext/linux",
+              "-L<(module_root_dir)/lib_ext/linux-x64",
               "-lili2c"
             ],
             "copies": [
               {
                 "files": [
-                  "lib_ext/linux/libili2c.so"
+                  "lib_ext/linux-x64/libili2c.so"
                 ],
                 "destination": "<(module_root_dir)/prebuilds/linux-x64/"
               }
@@ -85,13 +85,13 @@
             "copies": [
               {
                 "files": [
-                  "lib_ext\\win\\libili2c.lib"
+                  "lib_ext\\win32-x64\\libili2c.lib"
                 ],
                 "destination": "<(module_root_dir)"
               },
               {
                 "files": [
-                  "lib_ext\\win\\libili2c.dll"
+                  "lib_ext\\win32-x64\\libili2c.dll"
                 ],
                 "destination": "<(module_root_dir)/prebuilds/win32-x64"
               }
