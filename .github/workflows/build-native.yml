@@ -1,0 +1,47 @@
+name: Build Native
+
+on: 
+  push:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+jobs:
+
+  build:  
+    name: 'Build native shared library on ${{ matrix.os }}'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        # https://github.com/actions/runner-images
+        os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
+        #os: [ macos-14 ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '24'
+          distribution: 'graalvm'
+          cache: 'gradle'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build native image
+        shell: bash
+        run: |
+          cd java-lib
+          ./gradlew clean nativeCompile
+          ls -la build/native/nativeCompile/
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: reports-native
+          path: java-lib/build/reports/tests/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-libs
+          path: java-lib/build/native/nativeCompile/*
