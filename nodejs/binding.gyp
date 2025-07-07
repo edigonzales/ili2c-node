@@ -7,9 +7,10 @@
       ],
       "include_dirs": [
         "node_modules/node-addon-api",
-        "lib_ext/mac",
-        "lib_ext/linux",
-        "lib_ext/win",
+        "lib_ext/darwin-arm64",
+        "lib_ext/darwin-x64",
+        "lib_ext/linux-x64",
+        "lib_ext/win32-x64",
         "."
       ],
       "cflags_cc": [
