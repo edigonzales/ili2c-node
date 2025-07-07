@@ -188,7 +188,32 @@ jobs:
           pattern: nodejs-prebuild-*
           path: ./artifacts
 
+      - name: Merge prebuilds into package folder
+        shell: bash
+        run: |
+          set -e
+          cd nodejs
+          rm binding.gyp
+          rm -rf src
+          mkdir -p prebuilds
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/nodejs-prebuild-darwin-arm64/* ./prebuilds
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/nodejs-prebuild-darwin-x64/* ./prebuilds
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/nodejs-prebuild-linux-x64/* ./prebuilds
+          cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/nodejs-prebuild-win32-x64/* ./prebuilds
+          ls -la ./prebuilds/
+          ls -la ./prebuilds/darwin-arm64
 
+      - name: List resulting prebuilds
+        shell: bash
+        run: |
+          cd nodejs
+          echo "=== prebuilds ==="
+          find prebuilds -type f | sort
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: "https://registry.npmjs.org"
 
   #     - name: Test node module
   #       shell: bash
