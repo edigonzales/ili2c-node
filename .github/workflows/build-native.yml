@@ -8,7 +8,8 @@ on:
 
 jobs:
 
-  build:  
+  # Stage 1: Build native libraries
+  build-native:  
     name: 'Build native shared library on ${{ matrix.os }}'
     runs-on: ${{ matrix.os }}
     strategy:
@@ -54,3 +55,48 @@ jobs:
         with:
           name: native-libs-${{ matrix.plat-name }}
           path: java-lib/build/native/nativeCompile/*
+
+  # Stage 2: Build Node.js bindings
+  build-nodejs:
+    name: 'Build Node.js Bindings on ${{ matrix.os }}'
+    needs: build-native
+    strategy:
+      fail-fast: true
+      matrix:
+        # os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
+        os: [ macos-14 ]
+        include:
+          - os: 'macos-14'
+          #   plat-name: 'darwin-arm64'
+          # - os: 'macos-13'
+          #   plat-name: 'darwin-x64'
+          # - os: 'ubuntu-24.04'
+          #   plat-name: 'linux-x64'
+          # - os: 'windows-2022'
+          #   plat-name: 'win32-x64'
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download native library
+        uses: actions/download-artifact@v4
+        with:
+          name: native-lib-${{ matrix.plat-name }}
+          path: nodejs/lib_ext
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Ensure distutils for Python
+        shell: bash
+        run: |
+          python3 -m venv .venv
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            source .venv/Scripts/activate
+          else
+            source .venv/bin/activate
+          fi          
+          pip install setuptools
