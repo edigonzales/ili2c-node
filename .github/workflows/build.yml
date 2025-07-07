@@ -15,17 +15,17 @@ jobs:
       fail-fast: true
       matrix:
         # https://github.com/actions/runner-images
-        # os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
-        os: [ macos-14 ]
+        os: [ macos-14, macos-13, ubuntu-24.04, windows-2022 ]
+        # os: [ macos-14 ]
         include:
           - os: 'macos-14'
             plat-name: 'darwin-arm64'
-          # - os: 'macos-13'
-          #   plat-name: 'darwin-x64'
-          # - os: 'ubuntu-24.04'
-          #   plat-name: 'linux-x64'
-          # - os: 'windows-2022'
-          #   plat-name: 'win32-x64'
+          - os: 'macos-13'
+            plat-name: 'darwin-x64'
+          - os: 'ubuntu-24.04'
+            plat-name: 'linux-x64'
+          - os: 'windows-2022'
+            plat-name: 'win32-x64'
 
     runs-on: ${{ matrix.os }}
 
@@ -215,92 +215,34 @@ jobs:
           node-version: '22.x'
           registry-url: "https://registry.npmjs.org"
 
-  #     - name: Test node module
-  #       shell: bash
-  #       run: |
-  #         cd nodejs
-  #         node test.js
+      - name: 'Create local package (just for debugging)'
+        shell: bash
+        run: |
+          cd nodejs
+          npm pack
+          ls -la
 
-  #     - name: 'Upload build artifact'
-  #       if: ${{ success() }}
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: prebuild-${{matrix.plat-name}}
-  #         path: nodejs/prebuilds/**
+      - name: Authenticate with npm
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
 
+      - name: Bump version
+        run: |
+          cd nodejs
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          npm version patch --no-git-tag-version
+          git add package.json package-lock.json
+          git commit -m "chore(release): bump version"
+          git tag v$(node -p "require('./package.json').version")
+          git push origin HEAD
+          git push origin --tags
 
-  # publish:
-  #   name: Collect artifacts and publish to npm
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write   # allow push
+      - name: Publish to npm
+        shell: bash
+        run: | 
+          cd nodejs
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  #   steps:
-
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Download prebuild artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         pattern: prebuild-*
-  #         path: ./artifacts
-
-  #     - name: Merge prebuilds into package folder
-  #       shell: bash
-  #       run: |
-  #         set -e
-  #         cd nodejs
-  #         rm binding.gyp
-  #         rm -rf src
-  #         mkdir -p prebuilds
-  #         cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-arm64/* ./prebuilds
-  #         cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-darwin-x64/* ./prebuilds
-  #         cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-linux-x64/* ./prebuilds
-  #         cp -r /home/runner/work/ili2c-node/ili2c-node/artifacts/prebuild-win32-x64/* ./prebuilds
-  #         ls -la ./prebuilds/
-  #         ls -la ./prebuilds/darwin-arm64
-
-  #     - name: List resulting prebuilds
-  #       shell: bash
-  #       run: |
-  #         cd nodejs
-  #         echo "=== prebuilds ==="
-  #         find prebuilds -type f | sort
-
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22.x'
-  #         registry-url: "https://registry.npmjs.org"
-
-  #     - name: 'Create local package (just for debugging)'
-  #       shell: bash
-  #       run: |
-  #         cd nodejs
-  #         npm pack
-  #         ls -la
-
-  #     - name: Authenticate with npm
-  #       run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
-
-  #     - name: Bump version
-  #       run: |
-  #         cd nodejs
-  #         git config user.name "github-actions[bot]"
-  #         git config user.email "github-actions[bot]@users.noreply.github.com"
-  #         npm version patch --no-git-tag-version
-  #         git add package.json package-lock.json
-  #         git commit -m "chore(release): bump version"
-  #         git tag v$(node -p "require('./package.json').version")
-  #         git push origin HEAD
-  #         git push origin --tags
-
-  #     - name: Publish
-  #       shell: bash
-  #       run: | 
-  #         cd nodejs
-  #         npm publish
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+  # Stage 5: Publish Python package
