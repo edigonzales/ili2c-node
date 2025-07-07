@@ -9,6 +9,7 @@ on:
 jobs:
   build-node:
     name: Build node on ${{ matrix.os }}
+    needs: [build-native]
     strategy:
       fail-fast: true
       matrix:
