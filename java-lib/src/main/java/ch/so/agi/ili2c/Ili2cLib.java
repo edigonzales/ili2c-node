@@ -41,14 +41,14 @@ import org.graalvm.nativeimage.c.type.CTypeConversion;
 
 
 public class Ili2cLib {
-    @CEntryPoint(name = "createIlisMetas16")
-    public static int createIlisMetas16(IsolateThread thread, CCharPointer iliFile, CCharPointer xtfFile) {   
+    @CEntryPoint(name = "createIlisMeta16")
+    public static int createIlisMeta16(IsolateThread thread, CCharPointer iliFile, CCharPointer xtfFile) {   
         String iliFileStr = CTypeConversion.toJavaString(iliFile);
         String xtfFileStr = CTypeConversion.toJavaString(xtfFile);
-        return createIlisMetas16Impl(iliFileStr, xtfFileStr);        
+        return createIlisMeta16Impl(iliFileStr, xtfFileStr);        
     }
 
-    public static int createIlisMetas16Impl(String iliFile, String xtfFile) {
+    public static int createIlisMeta16Impl(String iliFile, String xtfFile) {
         try {
             TransferDescription td = getTransferDescription(iliFile);
             Imd16Generator.generate(new java.io.File(xtfFile), td, "ili2c" +

@@ -96,6 +96,7 @@ Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
     exports.Set("initIsolate", Napi::Function::New(env, InitIsolate));
     exports.Set("compileModel", Napi::Function::New(env, CompileModel));
     exports.Set("prettyPrint", Napi::Function::New(env, PrettyPrint));
+    //exports.Set("createIlisMeta16", Napi::Function::New(env, CreateIlisMeta16));
     exports.Set("tearDownIsolate", Napi::Function::New(env, TearDownIsolate));
     return exports;
 }

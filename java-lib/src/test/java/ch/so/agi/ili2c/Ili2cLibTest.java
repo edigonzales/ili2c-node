@@ -24,7 +24,7 @@ public class Ili2cLibTest {
         Path xtfFile = tempDirectory.toPath().resolve("SO_ARP_SEin_Konfiguration_20250115.xtf");
         
         // Execute
-        int ret = Ili2cLib.createIlisMetas16Impl(iliFile.toAbsolutePath().toString(), xtfFile.toAbsolutePath().toString());
+        int ret = Ili2cLib.createIlisMeta16Impl(iliFile.toAbsolutePath().toString(), xtfFile.toAbsolutePath().toString());
         
         // Validate
         assertEquals(0, ret);
