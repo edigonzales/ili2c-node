@@ -64,7 +64,7 @@ jobs:
 
   # Stage 2: Build Node.js bindings
   build-nodejs:
-    name: 'Build Node.js Bindings on ${{ matrix.os }}'
+    name: 'Build Node.js bindings on ${{ matrix.os }}'
     needs: build-native
     strategy:
       fail-fast: true
