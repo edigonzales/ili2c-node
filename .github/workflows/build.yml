@@ -124,13 +124,13 @@ jobs:
           mv prebuilds/${{matrix.plat-name}}/ili2c.node prebuilds/${{matrix.plat-name}}/node/
           ls -la prebuilds/${{matrix.plat-name}}/node/
 
-  #     - name: 'Fix dylib look up (node)'
-  #       if: ${{ runner.os == 'macOS' }}
-  #       shell: bash
-  #       run: |
-  #         cd nodejs/prebuilds/${{matrix.plat-name}}/node
-  #         install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
-  #         otool -L ili2c.node
+      - name: 'Fix dylib look up (node)'
+        if: ${{ runner.os == 'macOS' }}
+        shell: bash
+        run: |
+          cd nodejs/prebuilds/${{matrix.plat-name}}/node
+          install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
+          otool -L ili2c.node
 
   #     - name: Ensure distutils for Python
   #       shell: bash
