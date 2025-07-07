@@ -132,17 +132,6 @@ jobs:
           install_name_tool -change /Users/runner/work/ili2c-node/ili2c-node/java-lib/build/native/nativeCompile/libili2c.dylib @loader_path/../libili2c.dylib ili2c.node
           otool -L ili2c.node
 
-  #     - name: Ensure distutils for Python
-  #       shell: bash
-  #       run: |
-  #         python3 -m venv .venv
-  #         if [[ "$RUNNER_OS" == "Windows" ]]; then
-  #           source .venv/Scripts/activate
-  #         else
-  #           source .venv/bin/activate
-  #         fi          
-  #         pip install setuptools
-
       - name: Build electron module
         id: buildElectronModule
         shell: bash
@@ -178,6 +167,27 @@ jobs:
         with:
           name: nodejs-prebuild-${{matrix.plat-name}}
           path: nodejs/prebuilds/**
+
+  # Stage 3: Build Python bindings
+
+  # Stage 4: Publish Node.js package
+  publish-nodejs:
+    name: Publish Node.js package to npm
+    needs: build-nodejs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Node.js prebuild artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: nodejs-prebuild-*
+          path: ./artifacts
+
 
 
   #     - name: Test node module
