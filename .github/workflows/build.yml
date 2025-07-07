@@ -73,7 +73,7 @@ jobs:
         os: [ macos-14 ]
         include:
           - os: 'macos-14'
-          #   plat-name: 'darwin-arm64'
+            plat-name: 'darwin-arm64'
           # - os: 'macos-13'
           #   plat-name: 'darwin-x64'
           # - os: 'ubuntu-24.04'

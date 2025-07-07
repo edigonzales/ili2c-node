@@ -47,7 +47,8 @@ graalvmNative {
             buildArgs.add('--enable-url-protocols=http,https')
             buildArgs.add("-H:+AllowDeprecatedBuilderClassesOnImageClasspath")
             // https://www.graalvm.org/latest/reference-manual/native-image/optimizations-and-performance/
-            buildArgs.add('-Os') 
+            // buildArgs.add('-Os') 
+            buildArgs.add('-Ob') 
             buildArgs.add('-march=compatibility')
         }
         /*
