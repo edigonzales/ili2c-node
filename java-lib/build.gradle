@@ -61,20 +61,22 @@ graalvmNative {
     }
 }
 
+// Das hat in der Pipeline keinen Zweck zum jetzigen Zeitpunkt
+// und dient beim lokalen Entwickeln. 
 tasks.register('deleteSharedLibs', Delete) {
-   delete files("../nodejs/lib_ext")
+   delete files("../nodejs/lib_ext", "../python/lib_ext")
 }
 
 def osProperty = System.getProperty("os.name").toLowerCase()
 def osName = "";
 if (osProperty.contains("windows")) {
-    osName = "win"
+    osName = "win32-x86"
     println "Running on Windows"
 } else if (osProperty.contains("mac")) {
-    osName = "mac"
+    osName = "darwin-arm64"
     println "Running on macOS"
 } else if (osProperty.contains("linux")) {
-    osName = "linux"
+    osName = "linux-x64"
     println "Running on Linux"
 }
 
@@ -87,6 +89,6 @@ tasks.register('copySharedLibs', Copy) {
         include '*.dll'
         include '*.dylib'
     }
-    into "../nodejs/lib_ext/$osName"
+    into "../python/lib_ext/$osName"
 }
 nativeCompile.finalizedBy(copySharedLibs)
