@@ -113,19 +113,16 @@ jobs:
           fi          
           pip install setuptools
 
-
-
-  #     - name: Build node module
-  #       id: buildNodeModule
-  #       shell: bash
-  #       run: |
-  #         cd nodejs
-  #         ls -la lib_ext
-  #         npm ci
-  #         npx prebuildify --napi --strip --target 22.0.0
-  #         mkdir -p prebuilds/${{matrix.plat-name}}/node 
-  #         mv prebuilds/${{matrix.plat-name}}/ili2c.node prebuilds/${{matrix.plat-name}}/node/
-  #         ls -la prebuilds/${{matrix.plat-name}}/node/
+      - name: Build node module
+        shell: bash
+        run: |
+          cd nodejs
+          ls -la lib_ext
+          npm ci
+          npx prebuildify --napi --strip --target 22.0.0
+          mkdir -p prebuilds/${{matrix.plat-name}}/node 
+          mv prebuilds/${{matrix.plat-name}}/ili2c.node prebuilds/${{matrix.plat-name}}/node/
+          ls -la prebuilds/${{matrix.plat-name}}/node/
 
   #     - name: 'Fix dylib look up (node)'
   #       if: ${{ runner.os == 'macOS' }}
