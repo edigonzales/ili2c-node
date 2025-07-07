@@ -92,6 +92,11 @@ jobs:
           name: native-lib-${{ matrix.plat-name }}
           path: nodejs/lib_ext
 
+      - name: 'Debug'
+        shell: bash
+        run: |
+          ls -la ./nodejs/lib_ext
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
